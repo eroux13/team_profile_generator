@@ -7,7 +7,7 @@ const generateHTML = (answers) => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Team Profile Generator</title>
         <!-- Link CSS -->
-        <link rel="stylesheet" href="./assets/style.css">
+        <link rel="stylesheet" href="./style.css">
         <!-- Link Fonts Awesome -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
             integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
@@ -17,9 +17,9 @@ const generateHTML = (answers) => {
     </head>
     
     <body>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-light">
             <div class="container-md">
-                <a class="navbar-brand" href="#">My Team</a>
+                <h2>The Dream Team</h2>
             </div>
         </nav>
     
