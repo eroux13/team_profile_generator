@@ -1,0 +1,32 @@
+/* Navbar Styling */
+.navbar {
+    padding-left: 50%;
+    margin-bottom: 20px;
+    height: 130px;
+    background-color: #112D32 !important;
+}
+h2 {
+    color: rgb(255, 255, 255);
+}
+/* Navbar Styling End*/
+
+/* Main Styling */
+.row {
+    margin-bottom: 20px;
+}
+.card {
+    margin: 0 auto; 
+    float: none; 
+    margin-bottom: 10px; 
+}
+.card-header {
+    background-color: #254E48 !important;
+    color: rgb(255, 255, 255);
+}
+.card-body {
+    background-color: rgb(211, 211, 211) !important;
+}
+body {
+    background-color: #88BDBC !important;
+}
+/* Main Styling End*/
