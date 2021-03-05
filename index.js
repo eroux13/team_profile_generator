@@ -11,126 +11,108 @@ const Manager = require("./lib/manager.js");
 const Engineer = require("./lib/engineer.js");
 const Intern = require("./lib/intern.js");
 
+// Import HTML & Employee Template
+const generateHTML = require("./src/generateHTML.js");
+const employeeHTML = require("./src/employeeHTML.js");
+
 // Empty array to push employees into later on
 let teamMembers = [];
 
 // Inquirer prompt for user input
-const managerPrompt = () => {
-    inquirer.prompt([
-        {
-            type: "input",
-            message: "What is the team manager's name?",
-            name: "managerName"
-        },
-        {
-            type: "input",
-            message: "What is the team manager's ID number?",
-            name: "managerID"
-        },
-        {
-            type: "input",
-            message: "What is the team manager's email address?",
-            name: "managerEmail"
-        },
-        {
-            type: "input",
-            message: "What is the team manager's office number?",
-            name: "managerOfficeNumber"
-        }
-    ]).then((answers) => {
-        const managerName = answers.managerName;
-        const managerID = answers.managerID;
-        const managerEmail = answers.managerEmail;
-        const managerOfficeNumber = answers.managerOfficeNumber;
-        const manager = new Manager(managerName, managerID, managerEmail, managerOfficeNumber);
-        teamMembers.push(manager);
-        addEmployee();
-    })
+const initPrompt = () => {
+    return inquirer
+        .prompt([
+            {
+                type: "list",
+                message: "What is this role for this team member?",
+                name: "role",
+                choices: ["Manager", "Engineer", "Intern"]
+            },
+            {
+                type: "input",
+                message: "What is the name for this team member?",
+                name: "name"
+            },
+            {
+                type: "input",
+                message: "What is the ID number for this team member?",
+                name: "id"
+            },
+            {
+                type: "input",
+                message: "What is the email address for this team member?",
+                name: "email"
+            },
+            {
+                type: "input",
+                message: "What is the office phone number for the manager?",
+                name: "officeNumber",
+                when: answers => {
+                    return answers.role === "Manager"
+                }
+            },
+            {
+                type: "input",
+                message: "What is the github username for the engineer?",
+                name: "github",
+                when: answers => {
+                    return answers.role === "Engineer"
+                }
+            },
+            {
+                type: "input",
+                message: "Where does the intern attend school?",
+                name: "school",
+                when: answers => {
+                    return answers.role === "Intern"
+                }
+            },
+            {
+                type: "confirm",
+                message: "Would you like to add another team member?",
+                name: "add"
+            }
+        ]).then((answers) => {
+            teamMembers.push(answers);
+            console.log(answers.add);
+            if (answers.add) {
+                initPrompt();
+            }
+            else {
+                // Set object to contain empty strings
+                let teamInfo = {
+                    managers: "",
+                    engineers: "",
+                    interns: ""
+                };
+                // Loop through the teamMembers list and add respective HTML card depending on employee role
+                for (var i = 0; i < teamMembers.length; i++) {
+                    let employee = employeeHTML(teamMembers[i]);
+                    switch (teamMembers[i].role) {
+                        case "Manager":
+                            teamInfo.managers += employee;
+                            break;
+                        case "Engineer":
+                            teamInfo.engineers += employee;
+                            break;
+                        case "Intern":
+                            teamInfo.interns += employee;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                init(teamInfo);
+            }
+        })
 }
-const addEmployee = () => {
-    inquirer.prompt([
-        {
-            type: "list",
-            message: "Would you like to add another employee?",
-            name: "addEmployee",
-            choices: ["Engineer", "Intern", "Exit"]
-        }
-    ]).then((answers) => {
-        switch (answers.addEmployee) {
-            case "Engineer":
-                engineerPrompt();
-                break;
+// Generate HTML File
+const generateHTMLFile = util.promisify(fs.writeFile);
+const init = (answers) => {
+    generateHTMLFile(`${__dirname}/dist/index.html`, generateHTML(answers))
+        .then(() => console.log("Your team has been generated successfully!"))
+        .catch((err) => console.error(err))
+}
 
-            case "Intern":
-                internPrompt();
-                break;
-
-            default:
-                createTeam();
-        }
-    })
-}
-const engineerPrompt = () => {
-    inquirer.prompt([
-        {
-            type: "input",
-            message: "What is the engineer's name?",
-            name: "engineerName"
-        },
-        {
-            type: "input",
-            message: "What is the engineer's ID number?",
-            name: "engineerID"
-        },
-        {
-            type: "input",
-            message: "What is the engineer's email address?",
-            name: "engineerEmail"
-        },
-        {
-            type: "input",
-            message: "What is the engineer's github username?",
-            name: "engineerGithub"
-        }
-    ]).then((answers) => {
-        const engineerName = answers.engineerName;
-        const engineerID = answers.engineerID;
-        const engineerEmail = answers.engineerEmail;
-        const engineerGithub = answers.engineerGithub;
-        const engineer = new Engineer(engineerName, engineerID, engineerEmail, engineerGithub);
-        teamMembers.push(engineer);
-        addEmployee();
-    })
-}
-const internPrompt = () => {
-    inquirer.prompt([
-        {
-            type: "input",
-            message: "What is the intern's name?",
-            name: "internName"
-        },
-        {
-            type: "input",
-            message: "What is the intern's ID number?",
-            name: "internID"
-        },
-        {
-            type: "input",
-            message: "What is the intern's email address?",
-            name: "internEmail"
-        },
-        {
-            type: "input",
-            message: "Where does the intern attend school?",
-            name: "internSchool"
-        }
-    ]).then((answers) => {
-        const internName = answers.internName;
-        const internID = answers.internID;
-        const internEmail = answers.internEmail;
-        const internSchool = answers.internSchool;
-        const intern = new Intern(internName, internID, internEmail, internSchool);
-        teamMembers.push(intern);
-        addEmployee();
-    })
-}
+// Start Application
+initPrompt();
