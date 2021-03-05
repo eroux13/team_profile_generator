@@ -4,7 +4,7 @@
 
 ## Description
 
-The purpose of this project is tp build a Node.js command-line application that takes in information about employees on a software engineering team, then generate an HTML webpage that displays summaries for each person. This project also features the use of testing through Node.js's built in package called jest. To take user input the project also features the use of the Inquirer package.
+The purpose of this project is to build a Node.js command-line application that takes in information about employees on a software engineering team, then generate an HTML webpage that displays summaries for each person. This project also features the use of testing through Node.js's built in package called [Jest](https://www.npmjs.com/package/jest). To take user input the project also features the use of the [Inquirer](https://www.npmjs.com/package/inquirer) package.
 
 [Full Video Walkthrough](https://drive.google.com/file/d/1EPW-A2-1N119oGlMCxswRAktQDCHlEcI/view)
 
@@ -47,7 +47,7 @@ The usage of this project is to have a visual representation of a team, where ac
 
 ## Tests
 
-To test this project, the user can input and run `npm run test`. This will use Jest package and use the test scripts in the tests directory to make sure that the classes and functions are returning the proper values.
+To test this project, the user can input and run `npm run test`. This will use [Jest](https://www.npmjs.com/package/jest) package and use the test scripts in the tests directory to make sure that the classes and functions are returning the proper values.
 
 ![Tests](./assets/testsScreenshot.png)
 
