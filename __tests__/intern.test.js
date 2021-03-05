@@ -1,7 +1,7 @@
 const Intern = require("./../lib/intern.js");
 
 describe("Intern", () => {
-    decribe("Initilization", () => {
+    describe("Initilization", () => {
         it("should create an intern with a name, id, email, and school", () => {
             const intern = new Intern("EJ", 23, "some@email.com", "UC Davis");
 

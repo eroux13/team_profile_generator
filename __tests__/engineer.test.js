@@ -1,7 +1,7 @@
 const Engineer = require("./../lib/engineer.js");
 
 describe("Engineer", () => {
-    decribe("Initilization", () => {
+    describe("Initilization", () => {
         it("should create an engineer with a name, id, email, and github username", () => {
             const engineer = new Engineer("Krystal", 48, "ktran@yahoo.com", "ktran");
 
